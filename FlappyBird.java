@@ -120,28 +120,37 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
-        // background
+        // Draw background
         g.drawImage(backgroundImg, 0, 0, this.boardWidth, this.boardHeight, null);
 
-        // bird
+        // Draw bird
         g.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height, null);
 
-        // pipes
+        // Draw pipes
         for (int i = 0; i < pipes.size(); i++) {
             Pipe pipe = pipes.get(i);
             g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
         }
 
-        // score
-        g.setColor(Color.white);
-
+        // Draw score
         g.setFont(new Font("Arial", Font.PLAIN, 32));
         if (gameOver) {
-            g.drawString("Game Over: " + String.valueOf((int) score), 10, 35);
-        } else {
-            g.drawString(String.valueOf((int) score), 10, 35);
-        }
+            // Display "Game Over" in red color at center
+            g.setColor(Color.RED);
+            String gameOverText = "Game Over";
+            int gameOverTextWidth = g.getFontMetrics().stringWidth(gameOverText);
+            g.drawString(gameOverText, (boardWidth - gameOverTextWidth) / 2, boardHeight / 2 - 20);
 
+            // Display score in red color at center
+            String scoreText = "Score: " + String.valueOf((int) score);
+            int scoreTextWidth = g.getFontMetrics().stringWidth(scoreText);
+            g.drawString(scoreText, (boardWidth - scoreTextWidth) / 2, boardHeight / 2 + 20);
+        } else {
+            // Display score in white color at top left corner
+            g.setColor(Color.WHITE);
+            String scoreText = "Score: " + String.valueOf((int) score);
+            g.drawString(scoreText, 10, 35);
+        }
     }
 
     public void move() {
